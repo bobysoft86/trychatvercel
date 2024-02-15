@@ -33,7 +33,7 @@ io.on("connection", async (socket) => {
 server.on("error", (err) => {
   console.log("Error opening server");
 });
-
-server.listen(8001, () => {
-  console.log("Server working on port 8001");
+const port = process.env.PORT || 8001;
+server.listen(port, () => {
+  console.log(`Server working on port ${port}`);
 });
