@@ -1,13 +1,30 @@
-require('dotenv').config();
+
 const http = require("http");
 const { Server } = require("socket.io");
 const express = require("express");
 const path = require("path");
 const Room = require("./room");
+const cors = require('cors');
+
+
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+  //aqui hay un cambio para comprobar vercel
+  next();
+});
+app.use(cors({
+  origin: ["*",'http://localhost:4200','http://127.0.0.1:5500'],
+  credentials: true,
+}));
 
 const server = http.createServer(app);
 
